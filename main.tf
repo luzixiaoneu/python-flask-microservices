@@ -71,7 +71,13 @@ resource "aws_instance" "jenkins" {
 	"sudo ufw allow 80",
 	"sudo ufw allow OpenSSH",
 	"yes | sudo ufw enable",
-	"sudo systemctl start jenkins"
+	"sudo systemctl start jenkins",
+	 <<EOF
+                DD_API_KEY=f5b955fed841367b4d38783219444bee DD_AGENT_MAJOR_VERSION=7 bash -c "$(curl -L https://raw.githubusercontent.com/DataDog/datadog-agent/master/cmd/agent/install_script.sh)"
+
+        sudo systemctl start datadog-agent
+        EOF
+
     ]
   }
 
